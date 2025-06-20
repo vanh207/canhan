@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Cá Nhân</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Weather Effects -->
+    <div class="weather-container" id="weather-container"></div>
+
+    <!-- Dark Mode Toggle -->
+    <div class="dark-mode-toggle">
+        <button id="dark-mode-btn" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <div class="container">
+        <header class="panel full-width">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <img id="profile-avatar" src="DPT02331.jpg" alt="Avatar" class="profile-avatar">
+                    <div>
+                        <div class="profile-name">Việt Anh</div>
+                        <div class="profile-title">develop</div>
+                    </div>
+                </div>
+                <div class="welcome-message">
+                    <div id="typewriter-message"></div>
+                </div>
+                <div class="view-counter">
+                    Lượt xem: <span id="view-count">0</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="panel full-width music-player">
+    <h2>Trình phát nhạc</h2>
+    <div class="player-controls">
+        <button class="player-btn" id="prev"><i class="fas fa-step-backward"></i></button>
+        <button class="player-btn" id="play"><i class="fas fa-play"></i></button>
+        <button class="player-btn" id="next"><i class="fas fa-step-forward"></i></button>
+    </div>
+    
+    <!-- Visualizer -->
+    <div class="visualizer" id="visualizer">
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+        <div class="visualizer-bar"></div>
+    </div>
+    
+    <!-- Progress bar -->
+    <div class="progress-container" id="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    
+    <div class="time-display">
+        <span id="current-time">0:00</span>
+        <span id="duration">0:00</span>
+    </div>
+    
+    <div class="song-info">
+        <div class="song-title" id="song-title">Chưa có bài hát</div>
+        <div class="song-artist" id="song-artist">Chọn file nhạc từ máy</div>
+    </div>
+    
+    <!-- Album list -->
+    <div class="album-list" id="album-list">
+        <!-- Album items will be added dynamically -->
+    </div>
+    
+    <div class="file-input-container">
+        <label for="music-file" class="file-input-label">
+            <i class="fas fa-music"></i> Chọn nhạc từ máy
+        </label>
+        <input type="file" id="music-file" accept="audio/*" multiple>
+    </div>
+    <audio id="player"></audio>
+     <!-- Điều chỉnh âm lượng -->
+      <div class="volume-control">
+        <span>🔈</span>
+        <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.7">
+        <span>🔊</span>
+      </div>
+</section>
+
+        <section class="panel">
+            <h2>Thời Gian Hiện Tại</h2>
+            <div class="clock-container">
+                <div id="real-time-clock">00:00:00</div>
+                <div id="current-date">Chủ Nhật, 1 tháng 1, 2023</div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Đếm Ngược</h2>
+            <div class="countdown">
+                <div class="countdown-box">
+                    <div id="minutes">00</div>
+                    <div>Phút</div>
+                </div>
+                <div class="countdown-box">
+                    <div id="seconds">00</div>
+                    <div>Giây</div>
+                </div>
+            </div>
+            <div class="countdown-controls">
+                <input type="time" id="countdown-time" step="1">
+                <button class="game-btn" onclick="setCountdown()">Bắt đầu đếm ngược</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Quản Lý Việc</h2>
+            <div class="reminder-form">
+                <input type="text" class="reminder-input" id="new-reminder" placeholder="Nhập việc cần nhắc...">
+                <button class="reminder-btn" onclick="addReminder()">Thêm</button>
+            </div>
+            <ul class="reminder-list" id="reminders-list"></ul>
+        </section>
+
+        <section class="panel">
+            <h2>Game Cờ Caro</h2>
+            <div class="game-container">
+                <div id="game-board"></div>
+                <div class="game-info" id="game-status">Lượt chơi: X</div>
+                <button class="game-btn" onclick="resetGame()">Chơi lại</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Chuyển đổi nhiệt độ</h2>
+            <div class="converter">
+                <div class="converter-row">
+                    <input type="number" class="converter-input" id="celsius-input" placeholder="Độ C">
+                    <select class="converter-select" onchange="convertTemperature('celsius')">
+                        <option>°C</option>
+                    </select>
+                </div>
+                <div class="converter-row">
+                    <input type="number" class="converter-input" id="fahrenheit-input" placeholder="Độ F">
+                    <select class="converter-select" onchange="convertTemperature('fahrenheit')">
+                        <option>°F</option>
+                    </select>
+                </div>
+                <div class="converter-row">
+                    <input type="number" class="converter-input" id="kelvin-input" placeholder="Độ K">
+                    <select class="converter-select" onchange="convertTemperature('kelvin')">
+                        <option>K</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Đánh giá trang web</h2>
+            <div class="star-rating">
+                <i class="fas fa-star star" data-rating="1"></i>
+                <i class="fas fa-star star" data-rating="2"></i>
+                <i class="fas fa-star star" data-rating="3"></i>
+                <i class="fas fa-star star" data-rating="4"></i>
+                <i class="fas fa-star star" data-rating="5"></i>
+            </div>
+            <div id="rating-text" style="text-align: center; margin-top: 10px;"></div>
+        </section>
+
+        <section class="panel">
+            <h2>Lịch tháng</h2>
+            <div class="calendar">
+                <div class="calendar-header">
+                    <button class="game-btn" onclick="changeMonth(-1)"><i class="fas fa-chevron-left"></i></button>
+                    <div class="calendar-title" id="calendar-title">Tháng 1, 2023</div>
+                    <button class="game-btn" onclick="changeMonth(1)"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="calendar-grid" id="calendar-grid"></div>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Hiệu ứng thời tiết</h2>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+                <button class="game-btn" onclick="startWeatherEffect('rain')"><i class="fas fa-cloud-rain"></i> Mưa</button>
+                <button class="game-btn" onclick="startWeatherEffect('snow')"><i class="far fa-snowflake"></i> Tuyết</button>
+                <button class="game-btn" onclick="clearWeatherEffects()"><i class="fas fa-times"></i> Tắt</button>
+            </div>
+        </section>
+
+        <section class="panel">
+            <h2>Thông báo</h2>
+            <button class="game-btn" onclick="showModal('Chào mừng!', 'Cảm ơn bạn đã dùng.')">
+                <i class="fas fa-bell"></i> Hiển thị thông báo
+            </button>
+        </section>
+
+        <footer class="panel full-width footer">
+            <p>© Trang cá nhân. Được tạo bởi <a href="#" style="color: var(--primary);">Việt Anh</a></p>
+        </footer>
+    </div>
+
+    <!-- Modal Box -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title">Tiêu đề</h2>
+            <p id="modal-content">Nội dung thông báo</p>
+        </div>
+    </div>
+    <script src="scrip.js"></script>
+</body>
+</html>
